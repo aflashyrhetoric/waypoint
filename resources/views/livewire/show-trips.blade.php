@@ -1,4 +1,4 @@
-<div class="col-span-6 py-4">
+<div class="col-span-12 xl:col-span-6 h-[95vh] overflow-y-scroll">
 {{--    <h1 class="mb-4 text-lg">All Trips</h1>--}}
     {{--  A notice for when there's no trips  --}}
     @if($trips->isEmpty())

@@ -24,27 +24,27 @@
     </div>
     <div class="flex flex-col col-span-5">
         <p class="mb-2 font-bold text-2xl">
-            Departing
+            Morning
         </p>
         <div class="flex flex-col gap-y-3 justify-center">
             <div class="mr-2">
                 @if($trip->departing_departure_time === null )
                     <button wire:click="registerTimeFor('departing_departure_time')"
-                            class="border border-gray-700 p-3 rounded-lg fc hover:bg-gray-200 transition-colors">Set
+                            class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
                         Departure
                     </button>
                 @else
-                    <livewire:time-format-string :date="$trip->departing_departure_time"/>
+                    Departed At: <livewire:time-format-string :date="$trip->departing_departure_time"/>
                 @endif
             </div>
             <div class="mr-2">
                 @if($trip->departing_arrival_time === null )
                     <button wire:click="registerTimeFor('departing_arrival_time')"
-                            class="border border-gray-700 p-3 rounded-lg fc hover:bg-gray-200 transition-colors">Set
+                            class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
                         Arrival
                     </button>
                 @else
-                    <livewire:time-format-string :date="$trip->departing_arrival_time"/>
+                    Arrived At: <livewire:time-format-string :date="$trip->departing_arrival_time"/>
                 @endif
             </div>
         </div>
@@ -57,26 +57,26 @@
             <div class="mr-2">
                 @if($trip->returning_departure_time === null )
                     <button wire:click="registerTimeFor('returning_departure_time')"
-                            class="border border-gray-700 p-3 rounded-lg fc hover:bg-gray-200 transition-colors">Set
+                            class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
                         Departure
                     </button>
                 @else
-                    <livewire:time-format-string :date="$trip->returning_departure_time"/>
+                    Departed At: <livewire:time-format-string :date="$trip->returning_departure_time"/>
                 @endif
             </div>
             <div class="mr-2">
                 @if($trip->returning_arrival_time === null )
                     <button wire:click="registerTimeFor('returning_arrival_time')"
-                            class="border border-gray-700 p-3 rounded-lg fc hover:bg-gray-200 transition-colors">Set
+                            class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
                         Arrival
                     </button>
                 @else
-                    <livewire:time-format-string :date="$trip->returning_arrival_time"/>
+                    Arrived At: <livewire:time-format-string :date="$trip->returning_arrival_time"/>
                 @endif
             </div>
         </div>
     </div>
 
     <button wire:click="markComplete"
-            class="col-span-2 border border-gray-700 p-3 rounded-lg fc hover:bg-gray-200 transition-colors">{{ $trip->completed ? "Undo" : "Mark Complete" }}</button>
+            class="col-span-12 border border-gray-700 p-3 rounded-lg hover:bg-gray-200 transition-colors">{{ $trip->completed ? "Undo" : "Mark Complete" }}</button>
 </div>

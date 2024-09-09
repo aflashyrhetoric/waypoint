@@ -30,6 +30,6 @@ class Trip extends Model
 
     static public function loadTrips(): Collection
     {
-        return Trip::all()->sortByDesc('created_at');
+        return Trip::all()->reverse();
     }
 }
