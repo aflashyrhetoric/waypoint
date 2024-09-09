@@ -1,7 +1,7 @@
-<div class="border rounded-lg text-white bg-indigo-900">
-    <div class="relative h-[200px] xl:h-[25vh] flex items-center justify-center border border-gray-800 rounded-lg">
+<div class="rounded-lg text-white bg-indigo-900">
+    <div class="relative h-[200px] xl:h-[25vh] flex items-center justify-center rounded-t-lg">
         <img
-            class="absolute z-10 w-full h-full object-cover rounded-lg brightness-50 bg-top"
+            class="absolute z-10 w-full h-full object-cover rounded-t-lg brightness-50 bg-top"
             src="{{asset('images/background.png')}}" alt="pleasant city illustration of people walking around"/>
         <h1 class="text-white text-xl xl:text-5xl font-extrabold z-20 flex items-center justify-center"><i class="bi bi-rocket text-7xl"></i>Waypoint</h1>
     </div>

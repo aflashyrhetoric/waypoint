@@ -1,9 +1,9 @@
-<div class="col-span-12 xl:col-span-6 h-[95vh] overflow-y-scroll">
+<div class="col-span-12 xl:col-span-6 overflow-y-scroll {{ $inProgress ? "" : "h-[95vh]" }} ">
 {{--    <h1 class="mb-4 text-lg">All Trips</h1>--}}
     {{--  A notice for when there's no trips  --}}
-    @if($trips->isEmpty())
-        <div class="h-48 text-blue-800">
-            No trips found.
+    @if(count($trips) === 0)
+        <div class="h-24 flex items-center justify-center text-xl text-blue-800">
+            {{ $inProgress ? "Start a new journey by clicking above." : "No trips found"  }}
         </div>
     @endif
 

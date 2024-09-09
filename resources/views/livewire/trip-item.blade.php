@@ -1,50 +1,44 @@
 <div
-    class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-50 hover:opacity-100": "opacity-100" }}">
-    <div class="col-span-12 grid grid-cols-12">
-        <div class="col-span-1 h-8 w-8 rounded-lg bg-gray-800 text-white flex items-center justify-center mr-4">
-            {{ $trip->id }}
-        </div>
-
-        <p class="col-span-5">
-            <span class="font-bold">Departing trip:</span>
-            @if ($this->departureDuration)
-                <span>{{ $this->departureDuration }}</span>
-            @else
-                <span>N/A</span>
-            @endif
-        </p>
-        <p class="col-span-5">
-            <span class="font-bold">Returning trip:</span>
-            @if ($this->returningDuration)
-                <span>{{ $this->returningDuration }}</span>
-            @else
-                <span>N/A</span>
-            @endif
-        </p>
-        <i class="col-span-1 bi bi-trash text-red-600 cursor-pointer" wire:click="deleteTrip"></i>
+    class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-20 hover:opacity-100": "opacity-100" }}">
+    <div class="col-span-10 text-2xl font-bold">
+        <livewire:time-format-string-long :date="$trip->departing_departure_time"/>
     </div>
-    <div class="flex flex-col col-span-5">
-        <p class="mb-2 font-bold text-2xl">
-            Morning
+    <i class="col-span-2 flex justify-end bi bi-trash text-red-600 cursor-pointer" wire:click="deleteTrip"></i>
+    <div class="flex flex-col col-span-12 lg:col-span-6">
+        <p class="mb-2 font-bold text-xl">
+            Morning <i class="bi bi-brightness-high text-yellow-500"></i>
         </p>
         <div class="flex flex-col gap-y-3 justify-center">
-            <div class="flex justify-between">
+            <div class="flex space-x-2">
                 <div>
                     @if(!$trip->completed)
-                        <button wire:click="toggleAccidentDeparting" class="underline">
-                            {{ $trip->accident_departing ? "Undo Accident": "+ Accident"}}
+                        <button wire:click="toggleAccidentDeparting"
+                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->accident_departing ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                            @if($trip->accident_departing)
+                                <i class="bi bi-dash"></i>
+                            @else
+                                <i class="bi bi-plus"></i>
+                            @endif
+                            {{ $trip->accident_departing ? "Accident": "Accident"}}
                         </button>
                     @endif
                 </div>
                 <div>
                     @if(!$trip->completed)
-                        <button wire:click="toggleConstructionDeparting" class="underline">
-                            {{ $trip->construction_departing ? "Undo Construction" : "+ Construction" }}
+                        <button wire:click="toggleConstructionDeparting"
+                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->construction_departing ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                            @if($trip->construction_departing)
+                                <i class="bi bi-dash"></i>
+                            @else
+                                <i class="bi bi-plus"></i>
+                            @endif
+
+                            {{ $trip->construction_departing ? "Construction" : "Construction" }}
                         </button>
                     @endif
                 </div>
             </div>
-            <div class="mr-2">
+            <div class="">
                 @if($trip->departing_departure_time === null )
                     <button wire:click="registerTimeFor('departing_departure_time')"
                             class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
@@ -55,7 +49,7 @@
                     <livewire:time-format-string :date="$trip->departing_departure_time"/>
                 @endif
             </div>
-            <div class="mr-2">
+            <div class="">
                 @if($trip->departing_arrival_time === null )
                     <button wire:click="registerTimeFor('departing_arrival_time')"
                             class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
@@ -68,28 +62,42 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col col-span-5">
-        <p class="mb-2 font-bold text-2xl">
-            Evening
+    <div class="flex flex-col col-span-12 lg:col-span-6">
+        <p class="mb-2 font-bold text-xl">
+            Evening <i class="bi bi-moon text-indigo-700 ml-1"></i>
         </p>
         <div class="flex flex-col gap-y-3 justify-center">
-            <div class="flex justify-between">
+            <div class="flex space-x-2">
                 <div>
                     @if(!$trip->completed)
-                        <button wire:click="toggleAccidentReturning" class="underline">
-                            {{ $trip->accident_returning ? "Undo Accident": "+ Accident"}}
+                        <button wire:click="toggleAccidentReturning"
+                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->accident_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                            @if($trip->accident_returning)
+                                <i class="bi bi-dash"></i>
+                            @else
+                                <i class="bi bi-plus"></i>
+                            @endif
+
+                            {{ $trip->accident_returning ? "Accident": "Accident"}}
                         </button>
                     @endif
                 </div>
                 <div>
                     @if(!$trip->completed)
-                        <button wire:click="toggleConstructionReturning" class="underline">
-                            {{ $trip->construction_returning ? "Undo Construction": "+ Construction"}}
+                        <button wire:click="toggleConstructionReturning"
+                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->construction_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                            @if($trip->construction_returning)
+                                <i class="bi bi-dash"></i>
+                            @else
+                                <i class="bi bi-plus"></i>
+                            @endif
+
+                            {{ $trip->construction_returning ? "Construction": "Construction"}}
                         </button>
                     @endif
                 </div>
             </div>
-            <div class="mr-2">
+            <div class="">
                 @if($trip->returning_departure_time === null )
                     <button wire:click="registerTimeFor('returning_departure_time')"
                             class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
@@ -100,7 +108,7 @@
                     <livewire:time-format-string :date="$trip->returning_departure_time"/>
                 @endif
             </div>
-            <div class="mr-2">
+            <div class="">
                 @if($trip->returning_arrival_time === null )
                     <button wire:click="registerTimeFor('returning_arrival_time')"
                             class="border border-gray-700 p-1 rounded-lg fc hover:bg-gray-200 transition-colors">Set
@@ -112,6 +120,22 @@
                 @endif
             </div>
         </div>
+    </div>
+    <div class="col-span-6">
+        <span class="font-bold">Duration:</span>
+        @if ($this->departureDuration)
+            <span>{{ $this->departureDuration }}</span>
+        @else
+            <span>N/A</span>
+        @endif
+    </div>
+    <div class="col-span-6">
+        <span class="font-bold">Duration:</span>
+        @if ($this->returningDuration)
+            <span>{{ $this->returningDuration }}</span>
+        @else
+            <span>N/A</span>
+        @endif
     </div>
 
     <button wire:click="markComplete"

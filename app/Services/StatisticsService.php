@@ -14,7 +14,7 @@ class StatisticsService
 
     public function __construct()
     {
-        $this->trips = Trip::loadTrips();
+        $this->trips = Trip::all();
     }
 
     public function getStatistics(): StatisticsResults

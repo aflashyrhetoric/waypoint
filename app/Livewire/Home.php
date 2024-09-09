@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\DTOs\StatisticsResults;
 use App\Models\Trip;
 use App\Services\StatisticsService;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -14,11 +15,11 @@ class Home extends Component
 {
     public $latest;
 
-    public $trips;
+    public Collection $trips;
 
-    public function mount()
+    public function mount(): void
     {
-        $this->trips = Trip::loadTrips();
+        $this->trips = Trip::all();
     }
 
     #[Computed]
@@ -28,10 +29,22 @@ class Home extends Component
         return $statisticsService->getStatistics();
     }
 
-    #[On(['new-trip-added', 'trip-time-registered', 'deleted-trip', 'toggled-condition'])]
+    #[Computed]
+    public function inProgressTrips(): Collection
+    {
+        return $this->trips->where('completed', false);
+    }
+
+    #[Computed]
+    public function completedTrips(): Collection
+    {
+        return $this->trips->where('completed', true);
+    }
+
+    #[On(['new-trip-added', 'trip-time-registered', 'deleted-trip', 'toggled-condition', 'toggled-completed'])]
     public function refreshTripList(): void
     {
-        $this->trips = Trip::loadTrips();
+        $this->trips = Trip::all();
     }
 
     #[Title('Waypoint')]

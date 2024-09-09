@@ -58,6 +58,8 @@ class TripItem extends Component
         $this->trip->update([
             'completed' => !$this->trip->completed,
         ]);
+
+        $this->dispatch('toggled-completed');
     }
 
     public function deleteTrip(): void

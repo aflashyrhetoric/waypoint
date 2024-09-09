@@ -12,6 +12,8 @@ class ShowTrips extends Component
     #[Reactive]
     public $trips;
 
+    public bool $inProgress;
+
     public function render()
     {
         // Pass the trips to the Livewire view

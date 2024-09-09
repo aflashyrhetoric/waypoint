@@ -28,8 +28,8 @@ class Trip extends Model
         return $query->where('completed', false);
     }
 
-    static public function loadTrips(): Collection
+    public function scopeCompleted($query)
     {
-        return Trip::all()->reverse();
+        return $query->where('completed', true);
     }
 }
