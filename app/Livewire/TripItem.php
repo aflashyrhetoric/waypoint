@@ -60,6 +60,44 @@ class TripItem extends Component
         ]);
     }
 
+    public function deleteTrip(): void
+    {
+        $this->trip->delete();
+        $this->dispatch('deleted-trip');
+    }
+
+    public function toggleAccidentDeparting(): void
+    {
+        $this->trip->update([
+            'accident_departing' => !$this->trip->accident_departing,
+        ]);
+        $this->dispatch('toggled-condition');
+    }
+
+    public function toggleAccidentReturning(): void
+    {
+        $this->trip->update([
+            'accident_returning' => !$this->trip->accident_returning,
+        ]);
+        $this->dispatch('toggled-condition');
+    }
+
+    public function toggleConstructionDeparting(): void
+    {
+        $this->trip->update([
+            'construction_departing' => !$this->trip->construction_departing,
+        ]);
+        $this->dispatch('toggled-condition');
+    }
+
+    public function toggleConstructionReturning(): void
+    {
+        $this->trip->update([
+            'construction_returning' => !$this->trip->construction_returning,
+        ]);
+        $this->dispatch('toggled-condition');
+    }
+
     public function render()
     {
         return view('livewire.trip-item');

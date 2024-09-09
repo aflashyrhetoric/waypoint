@@ -83,17 +83,27 @@ class StatisticsService
 
     private function calculateAverageDelayWithAccidents(StatisticsResults $stats): StatisticsResults
     {
-        $tripsWithoutAccident = $this->trips->filter(function ($trip) {
-            return !$trip->had_accident;
+        /**
+         * ACCIDENTS: DEPARTING
+         */
+        $departingTripsWithoutAccident = $this->trips->filter(function ($trip) {
+            return !$trip->accident_departing;
         });
-        $averageDepartingTripDurationNoAccidents = $this->getAverageDurationForDepartingTrips($tripsWithoutAccident);
-        $averageReturningTripDurationNoAccidents = $this->getAverageDurationForReturningTrips($tripsWithoutAccident);
+        $averageDepartingTripDurationNoAccidents = $this->getAverageDurationForDepartingTrips($departingTripsWithoutAccident);
 
-        $tripsWithAccident = $this->trips->filter(function ($trip) {
-            return $trip->had_accident;
+        $returningTripsWithoutAccident = $this->trips->filter(function ($trip) {
+            return !$trip->accident_returning;
         });
-        $averageDepartingTripDurationAccidents = $this->getAverageDurationForDepartingTrips($tripsWithAccident);
-        $averageReturningTripDurationAccidents = $this->getAverageDurationForReturningTrips($tripsWithAccident);
+        $averageReturningTripDurationNoAccidents = $this->getAverageDurationForReturningTrips($returningTripsWithoutAccident);
+
+        $departingTripsWithAccident = $this->trips->filter(function ($trip) {
+            return $trip->accident_departing;
+        });
+        $averageDepartingTripDurationAccidents = $this->getAverageDurationForDepartingTrips($departingTripsWithAccident);
+        $returningTripsWithAccident = $this->trips->filter(function ($trip) {
+            return $trip->accident_returning;
+        });
+        $averageReturningTripDurationAccidents = $this->getAverageDurationForReturningTrips($returningTripsWithAccident);
 
         // The durations themselves with accidents
         $stats->averageDepartingDurationWithAccident = $averageDepartingTripDurationAccidents;
@@ -106,6 +116,9 @@ class StatisticsService
         $stats->averageDepartingDelayWithAccidentString = $this->convertDurationToString($stats->averageDepartingDelayWithAccident);
         $stats->averageReturningDelayWithAccident = $averageReturningTripDurationAccidents - $averageReturningTripDurationNoAccidents;
         $stats->averageReturningDelayWithAccidentString = $this->convertDurationToString($stats->averageReturningDelayWithAccident);
+
+
+
         return $stats;
     }
 

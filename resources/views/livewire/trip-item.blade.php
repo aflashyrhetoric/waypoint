@@ -1,7 +1,7 @@
 <div
     class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-50 hover:opacity-100": "opacity-100" }}">
     <div class="col-span-12 grid grid-cols-12">
-        <div class="col-span-2 h-8 w-8 rounded-lg bg-gray-800 text-white flex items-center justify-center mr-4">
+        <div class="col-span-1 h-8 w-8 rounded-lg bg-gray-800 text-white flex items-center justify-center mr-4">
             {{ $trip->id }}
         </div>
 
@@ -21,12 +21,29 @@
                 <span>N/A</span>
             @endif
         </p>
+        <i class="col-span-1 bi bi-trash text-red-600 cursor-pointer" wire:click="deleteTrip"></i>
     </div>
     <div class="flex flex-col col-span-5">
         <p class="mb-2 font-bold text-2xl">
             Morning
         </p>
         <div class="flex flex-col gap-y-3 justify-center">
+            <div class="flex justify-between">
+                <div>
+                    @if(!$trip->completed)
+                        <button wire:click="toggleAccidentDeparting" class="underline">
+                            {{ $trip->accident_departing ? "+ Accident":"Undo Accident"}}
+                        </button>
+                    @endif
+                </div>
+                <div>
+                    @if(!$trip->completed)
+                        <button wire:click="toggleConstructionDeparting" class="underline">
+                            {{ $trip->construction_departing ? "+ Construction":"Undo Construction"}}
+                        </button>
+                    @endif
+                </div>
+            </div>
             <div class="mr-2">
                 @if($trip->departing_departure_time === null )
                     <button wire:click="registerTimeFor('departing_departure_time')"
@@ -34,7 +51,8 @@
                         Departure
                     </button>
                 @else
-                    Departed At: <livewire:time-format-string :date="$trip->departing_departure_time"/>
+                    Departed At:
+                    <livewire:time-format-string :date="$trip->departing_departure_time"/>
                 @endif
             </div>
             <div class="mr-2">
@@ -44,16 +62,33 @@
                         Arrival
                     </button>
                 @else
-                    Arrived At: <livewire:time-format-string :date="$trip->departing_arrival_time"/>
+                    Arrived At:
+                    <livewire:time-format-string :date="$trip->departing_arrival_time"/>
                 @endif
             </div>
         </div>
     </div>
     <div class="flex flex-col col-span-5">
         <p class="mb-2 font-bold text-2xl">
-            Arriving
+            Evening
         </p>
         <div class="flex flex-col gap-y-3 justify-center">
+            <div class="flex justify-between">
+                <div>
+                    @if(!$trip->completed)
+                        <button wire:click="toggleAccidentReturning" class="underline">
+                            {{ $trip->accident_returning ? "+ Accident":"Undo Accident"}}
+                        </button>
+                    @endif
+                </div>
+                <div>
+                    @if(!$trip->completed)
+                        <button wire:click="toggleConstructionReturning" class="underline">
+                            {{ $trip->construction_returning ? "+ Construction":"Undo Construction"}}
+                        </button>
+                    @endif
+                </div>
+            </div>
             <div class="mr-2">
                 @if($trip->returning_departure_time === null )
                     <button wire:click="registerTimeFor('returning_departure_time')"
@@ -61,7 +96,8 @@
                         Departure
                     </button>
                 @else
-                    Departed At: <livewire:time-format-string :date="$trip->returning_departure_time"/>
+                    Departed At:
+                    <livewire:time-format-string :date="$trip->returning_departure_time"/>
                 @endif
             </div>
             <div class="mr-2">
@@ -71,7 +107,8 @@
                         Arrival
                     </button>
                 @else
-                    Arrived At: <livewire:time-format-string :date="$trip->returning_arrival_time"/>
+                    Arrived At:
+                    <livewire:time-format-string :date="$trip->returning_arrival_time"/>
                 @endif
             </div>
         </div>

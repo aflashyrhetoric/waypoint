@@ -28,7 +28,7 @@ class Home extends Component
         return $statisticsService->getStatistics();
     }
 
-    #[On(['new-trip-added', 'trip-time-registered'])]
+    #[On(['new-trip-added', 'trip-time-registered', 'deleted-trip', 'toggled-condition'])]
     public function refreshTripList(): void
     {
         $this->trips = Trip::loadTrips();

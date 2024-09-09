@@ -6,29 +6,38 @@
                 <h1 class="w-full font-bold mb-4 text-2xl"><i class="bi bi-bar-chart"></i> Trip Statistics</h1>
 
                 <div class="grid-cols-12 grid gap-4">
-                    <div class="col-span-6 flex flex-col">
-                        <p class="font-bold">Avg Departing:</p>
-                        <p>{{ $this->statisticsResults->averageDepartureTripDurationString }}</p>
+                    <div class="col-span-6">
+                        Departing
+                        <div class="flex flex-col">
+                            <p class="font-bold">Average:</p>
+                            <p>{{ $this->statisticsResults->averageDepartureTripDurationString }}</p>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="font-bold">Average w/ Accident:</p>
+                            <p>
+                                <span
+                                    class="text-gray-800">{{ $this->statisticsResults->averageDepartingDurationWithAccidentString }}</span>
+                                <span
+                                    class="text-red-600">(+{{ $this->statisticsResults->averageDepartingDelayWithAccidentString }})</span>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-span-6 flex flex-col">
-                        <p class="font-bold">Avg Returning:</p>
-                        <p>{{ $this->statisticsResults->averageReturningTripDurationString }}</p>
-                    </div>
-                    <div class="col-span-3 flex flex-col">
-                        <p class="font-bold">Avg Departing (Accident):</p>
-                        <p>{{ $this->statisticsResults->averageDepartingDurationWithAccidentString }}</p>
-                    </div>
-                    <div class="col-span-3 flex flex-col">
-                        <p class="font-bold">Avg Departing Delay (Accident):</p>
-                        <p class="text-red-600">+{{ $this->statisticsResults->averageDepartingDelayWithAccidentString }}</p>
-                    </div>
-                    <div class="col-span-3 flex flex-col">
-                        <p class="font-bold">Avg Returning (Accident):</p>
-                        <p>{{ $this->statisticsResults->averageReturningDurationWithAccidentString }}</p>
-                    </div>
-                    <div class="col-span-3 flex flex-col">
-                        <p class="font-bold">Avg Returning Delay (Accident):</p>
-                        <p class="text-red-600">+{{ $this->statisticsResults->averageReturningDelayWithAccidentString }}</p>
+                    <div class="col-span-6">
+                        Returning
+                        <div class="flex flex-col">
+                            <p class="font-bold">Average:</p>
+                            <p>{{ $this->statisticsResults->averageReturningTripDurationString }}</p>
+                        </div>
+                        <div class="flex flex-col">
+                            <p class="font-bold">Average w/ Accident:</p>
+                            <p>
+                                <span
+                                    class="text-gray-800">{{ $this->statisticsResults->averageReturningDurationWithAccidentString }}</span>
+                                <span class="text-red-600">
+                                    (+{{ $this->statisticsResults->averageReturningDelayWithAccidentString }})
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
 

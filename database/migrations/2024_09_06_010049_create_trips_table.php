@@ -17,8 +17,10 @@ return new class extends Migration {
             $table->timestamp('returning_arrival_time')->nullable();
 
             // boolean "had_accident" and "had_construction"
-            $table->boolean('had_accident')->default(false);
-            $table->boolean('had_construction')->default(false);
+            $table->boolean('accident_departing')->default(false);
+            $table->boolean('accident_returning')->default(false);
+            $table->boolean('construction_departing')->default(false);
+            $table->boolean('construction_returning')->default(false);
 
             $table->boolean('completed')->default(false);
 
