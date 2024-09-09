@@ -124,17 +124,27 @@ class StatisticsService
 
     private function calculateAverageDelayFromConstruction(StatisticsResults $stats): StatisticsResults
     {
-        $tripsWithoutConstruction = $this->trips->filter(function ($trip) {
-            return !$trip->had_construction;
+        /**
+         * CONSTRUCTION: DEPARTING
+         */
+        $departingTripsWithoutConstruction = $this->trips->filter(function ($trip) {
+            return !$trip->construction_departing;
         });
-        $averageDepartingTripDurationNoConstruction = $this->getAverageDurationForDepartingTrips($tripsWithoutConstruction);
-        $averageReturningTripDurationNoConstruction = $this->getAverageDurationForReturningTrips($tripsWithoutConstruction);
+        $averageDepartingTripDurationNoConstruction = $this->getAverageDurationForDepartingTrips($departingTripsWithoutConstruction);
 
-        $tripsWithConstruction = $this->trips->filter(function ($trip) {
-            return $trip->had_construction;
+        $returningTripsWithoutConstruction = $this->trips->filter(function ($trip) {
+            return !$trip->construction_returning;
         });
-        $averageDepartingTripDurationConstruction = $this->getAverageDurationForDepartingTrips($tripsWithConstruction);
-        $averageReturningTripDurationConstruction = $this->getAverageDurationForReturningTrips($tripsWithConstruction);
+        $averageReturningTripDurationNoConstruction = $this->getAverageDurationForReturningTrips($returningTripsWithoutConstruction);
+
+        $departingTripsWithConstruction = $this->trips->filter(function ($trip) {
+            return $trip->construction_departing;
+        });
+        $averageDepartingTripDurationConstruction = $this->getAverageDurationForDepartingTrips($departingTripsWithConstruction);
+        $returningTripsWithConstruction = $this->trips->filter(function ($trip) {
+            return $trip->construction_returning;
+        });
+        $averageReturningTripDurationConstruction = $this->getAverageDurationForReturningTrips($returningTripsWithConstruction);
 
         // The durations themselves with construction
         $stats->averageDepartingDurationWithConstruction = $averageDepartingTripDurationConstruction;
@@ -147,6 +157,7 @@ class StatisticsService
         $stats->averageDepartingDelayWithConstructionString = $this->convertDurationToString($stats->averageDepartingDelayWithConstruction);
         $stats->averageReturningDelayWithConstruction = $averageReturningTripDurationConstruction - $averageReturningTripDurationNoConstruction;
         $stats->averageReturningDelayWithConstructionString = $this->convertDurationToString($stats->averageReturningDelayWithConstruction);
+
         return $stats;
     }
 
