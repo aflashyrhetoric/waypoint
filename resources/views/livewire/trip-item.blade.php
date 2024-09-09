@@ -32,14 +32,14 @@
                 <div>
                     @if(!$trip->completed)
                         <button wire:click="toggleAccidentDeparting" class="underline">
-                            {{ $trip->accident_departing ? "+ Accident":"Undo Accident"}}
+                            {{ $trip->accident_departing ? "Undo Accident": "+ Accident"}}
                         </button>
                     @endif
                 </div>
                 <div>
                     @if(!$trip->completed)
                         <button wire:click="toggleConstructionDeparting" class="underline">
-                            {{ $trip->construction_departing ? "+ Construction":"Undo Construction"}}
+                            {{ $trip->construction_departing ? "Undo Construction" : "+ Construction" }}
                         </button>
                     @endif
                 </div>
@@ -77,14 +77,14 @@
                 <div>
                     @if(!$trip->completed)
                         <button wire:click="toggleAccidentReturning" class="underline">
-                            {{ $trip->accident_returning ? "+ Accident":"Undo Accident"}}
+                            {{ $trip->accident_returning ? "Undo Accident": "+ Accident"}}
                         </button>
                     @endif
                 </div>
                 <div>
                     @if(!$trip->completed)
                         <button wire:click="toggleConstructionReturning" class="underline">
-                            {{ $trip->construction_returning ? "+ Construction":"Undo Construction"}}
+                            {{ $trip->construction_returning ? "Undo Construction": "+ Construction"}}
                         </button>
                     @endif
                 </div>
