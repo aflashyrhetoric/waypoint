@@ -38,7 +38,8 @@ class Home extends Component
     #[Computed]
     public function completedTrips(): Collection
     {
-        return $this->trips->where('completed', true);
+        // Sorted by the 'departure_departing_time` with most recent first
+        return $this->trips->where('completed', true)->sortByDesc('departing_departure_time');
     }
 
     #[On(['new-trip-added', 'trip-time-registered', 'deleted-trip', 'toggled-condition', 'toggled-completed'])]
