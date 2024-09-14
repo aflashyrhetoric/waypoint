@@ -16,19 +16,27 @@ class TripItem extends Component
     public function mount($trip): void
     {
         $this->trip = $trip;
-        if ($this->trip->returning_departure_time !== null && $this->trip->returning_arrival_time) {
-            $this->returningDuration = Carbon::parse($this->trip->returning_departure_time)->diffForHumans(Carbon::parse($this->trip->returning_arrival_time), true);
-        } else {
-            $this->returningDuration = null;
-        }
+//        if ($this->trip->returning_departure_time !== null && $this->trip->returning_arrival_time) {
+//            $this->returningDuration = Carbon::parse($this->trip->returning_departure_time)->diffForHumans(Carbon::parse($this->trip->returning_arrival_time), true);
+//        } else {
+//            $this->returningDuration = null;
+//        }
     }
 
     #[Computed]
     public function departureDuration()
     {
         if ($this->trip->departing_departure_time !== null && $this->trip->departing_arrival_time) {
-            return Carbon::parse($this->trip->departing_departure_time)->diffForHumans(Carbon::parse($this->trip->departing_arrival_time), true);
-        }
+            $diffInMinutes = Carbon::parse($this->trip->departing_departure_time)->diffInUnit("minute", Carbon::parse($this->trip->departing_arrival_time), true);
+
+            // Calculate hours and minutes from the total difference in minutes
+            $hours = floor($diffInMinutes / 60);
+            $minutes = $diffInMinutes % 60;
+
+            // Return formatted string based on hours and minutes
+            $formattedDiff = ($hours > 0 ? $hours . ' hours' : '') . ($hours > 0 && $minutes > 0 ? ', ' : '') . ($minutes > 0 ? $minutes . ' minutes' : '');
+
+            return $formattedDiff;        }
         return null;
     }
 
@@ -36,7 +44,16 @@ class TripItem extends Component
     public function returningDuration()
     {
         if ($this->trip->returning_departure_time !== null && $this->trip->returning_arrival_time) {
-            return Carbon::parse($this->trip->returning_departure_time)->diffForHumans(Carbon::parse($this->trip->returning_arrival_time), true);
+            $diffMinutes = Carbon::parse($this->trip->returning_departure_time)->diffInUnit("minute", Carbon::parse($this->trip->returning_arrival_time), true);
+
+            // Calculate hours and minutes from the total difference in minutes
+            $hours = floor($diffMinutes / 60);
+            $minutes = $diffMinutes % 60;
+
+            // Return formatted string based on hours and minutes
+            $formattedDiff = ($hours > 0 ? $hours . ' hours' : '') . ($hours > 0 && $minutes > 0 ? ', ' : '') . ($minutes > 0 ? $minutes . ' minutes' : '');
+
+            return $formattedDiff;
         }
         return null;
     }

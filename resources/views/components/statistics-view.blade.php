@@ -37,7 +37,7 @@
                         <span
                             class="text-gray-800">{{ $statisticsResults->averageReturningDurationWithAccidentString }}</span>
                         <span class="text-red-600">
-                            (+{{ $statisticsResults->averageReturningDelayWithAccidentString }})
+                            (+{{ $statisticsResults->averageReturningDelayWithAccidentString }} delay)
                         </span>
                     </p>
                     <p class="font-medium">Average w/ Construction:</p>
