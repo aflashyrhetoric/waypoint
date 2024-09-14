@@ -1,5 +1,5 @@
 <div
-    class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-20 hover:opacity-100": "opacity-100" }}">
+    class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-50 hover:opacity-100": "opacity-100" }}">
     <div class="col-span-10 text-2xl font-bold">
         <livewire:time-format-string-long :date="$trip->departing_departure_time"/>
     </div>
@@ -11,8 +11,8 @@
         <div class="flex flex-col gap-y-3 justify-center">
             <div class="flex space-x-2">
                 <div>
-                    @if(!$trip->completed)
                         <button wire:click="toggleAccidentDeparting"
+                                disabled="{{ $trip->completed }}"
                                 class="border text-xs rounded-lg px-2 p-1 {{ $trip->accident_departing ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
                             @if($trip->accident_departing)
                                 <i class="bi bi-dash"></i>
@@ -21,11 +21,11 @@
                             @endif
                             {{ $trip->accident_departing ? "Accident": "Accident"}}
                         </button>
-                    @endif
                 </div>
                 <div>
-                    @if(!$trip->completed)
                         <button wire:click="toggleConstructionDeparting"
+                                disabled="{{ $trip->completed }}"
+
                                 class="border text-xs rounded-lg px-2 p-1 {{ $trip->construction_departing ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
                             @if($trip->construction_departing)
                                 <i class="bi bi-dash"></i>
@@ -35,7 +35,6 @@
 
                             {{ $trip->construction_departing ? "Construction" : "Construction" }}
                         </button>
-                    @endif
                 </div>
             </div>
             <div class="">
@@ -69,32 +68,30 @@
         <div class="flex flex-col gap-y-3 justify-center">
             <div class="flex space-x-2">
                 <div>
-                    @if(!$trip->completed)
-                        <button wire:click="toggleAccidentReturning"
-                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->accident_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
-                            @if($trip->accident_returning)
-                                <i class="bi bi-dash"></i>
-                            @else
-                                <i class="bi bi-plus"></i>
-                            @endif
+                    <button wire:click="toggleAccidentReturning"
+                            disabled="{{ $trip->completed }}"
+                            class="border text-xs rounded-lg px-2 p-1 {{ $trip->accident_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                        @if($trip->accident_returning)
+                            <i class="bi bi-dash"></i>
+                        @else
+                            <i class="bi bi-plus"></i>
+                        @endif
 
-                            {{ $trip->accident_returning ? "Accident": "Accident"}}
-                        </button>
-                    @endif
+                        {{ $trip->accident_returning ? "Accident": "Accident"}}
+                    </button>
                 </div>
                 <div>
-                    @if(!$trip->completed)
-                        <button wire:click="toggleConstructionReturning"
-                                class="border text-xs rounded-lg px-2 p-1 {{ $trip->construction_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
-                            @if($trip->construction_returning)
-                                <i class="bi bi-dash"></i>
-                            @else
-                                <i class="bi bi-plus"></i>
-                            @endif
+                    <button wire:click="toggleConstructionReturning"
+                            disabled="{{ $trip->completed }}"
+                            class="border text-xs rounded-lg px-2 p-1 {{ $trip->construction_returning ? "border-blue-500": " hover:border-blue-500 border-gray-300" }} ">
+                        @if($trip->construction_returning)
+                            <i class="bi bi-dash"></i>
+                        @else
+                            <i class="bi bi-plus"></i>
+                        @endif
 
-                            {{ $trip->construction_returning ? "Construction": "Construction"}}
-                        </button>
-                    @endif
+                        {{ $trip->construction_returning ? "Construction": "Construction"}}
+                    </button>
                 </div>
             </div>
             <div class="">
