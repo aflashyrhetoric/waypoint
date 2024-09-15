@@ -50,11 +50,16 @@
                     </p>
                 </div>
             </div>
-            <div class="cs-12 min-h-[300px] border">
+            <div class="cs-12 min-h-[275px] border">
                 {{-- Iterate through $this->averageDurationPerDay --}}
                 <livewire:livewire-column-chart
-                    key="{{ $columnChartModel->reactiveKey() }}"
-                    :column-chart-model="$columnChartModel" />
+                    key="{{ $departingColumnChartModel->reactiveKey() }}"
+                    :column-chart-model="$departingColumnChartModel"/>
+            </div>
+            <div class="cs-12 min-h-[275px] border">
+                <livewire:livewire-column-chart
+                    key="{{ $arrivingColumnChartModel->reactiveKey() }}"
+                    :column-chart-model="$arrivingColumnChartModel"/>
             </div>
         </div>
     </div>

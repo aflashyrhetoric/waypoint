@@ -38,19 +38,32 @@ class Home extends Component
     }
 
     #[Computed]
-    public function columnChartModel(): ColumnChartModel
+    public function departingColumnChartModel(): mixed
     {
         $columnChartModel =
             (new ColumnChartModel())
-                ->setTitle('Avg Trip Duration (m)')
+                ->setTitle('Avg Departing Trip')
                 ->setAnimated(true)
                 ->withoutLegend();
 
-        foreach ($this->statisticsResults->averageDurationPerDay as $day => $duration) {
+        foreach ($this->statisticsResults->averageDepartingTripDurationPerDay as $day => $duration) {
             $columnChartModel->addColumn($day, $duration, $this->getRandomPastelColor());
         }
+        return $columnChartModel;
+    }
 
+    #[Computed]
+    public function arrivingColumnChartModel(): mixed
+    {
+        $columnChartModel =
+            (new ColumnChartModel())
+                ->setTitle('Avg Returning Trip (m)')
+                ->setAnimated(true)
+                ->withoutLegend();
 
+        foreach ($this->statisticsResults->averageArrivingTripDurationPerDay as $day => $duration) {
+            $columnChartModel->addColumn($day, $duration, $this->getRandomPastelColor());
+        }
         return $columnChartModel;
     }
 

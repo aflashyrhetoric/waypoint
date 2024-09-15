@@ -2,7 +2,11 @@
     <div class="col-span-12 xl:col-span-6 space-y-4">
         <livewire:create-trip/>
         <livewire:show-trips :trips="$this->inProgressTrips" inProgress />
-        <x-statistics-view :statisticsResults="$this->statisticsResults" :column-chart-model="$this->columnChartModel" />
+        <x-statistics-view
+            :statisticsResults="$this->statisticsResults"
+            :departing-column-chart-model="$this->departingColumnChartModel"
+            :arriving-column-chart-model="$this->arrivingColumnChartModel"
+        />
     </div>
     <livewire:show-trips :trips="$this->completedTrips" />
 </div>
