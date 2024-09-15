@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\DTOs\StatisticsResults;
 use App\Models\Trip;
 use App\Services\StatisticsService;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -17,6 +18,7 @@ class Home extends Component
 
     public Collection $trips;
 
+
     public function mount(): void
     {
         $this->trips = Trip::all();
@@ -27,6 +29,29 @@ class Home extends Component
     {
         $statisticsService = new StatisticsService();
         return $statisticsService->getStatistics();
+    }
+
+    private function getRandomPastelColor(): string
+    {
+        // Ensure it's a bright pastel color
+        return '#' . str_pad(dechex(mt_rand(0xaaaaaa, 0xeeeeee)), 6, '0', STR_PAD_LEFT);
+    }
+
+    #[Computed]
+    public function columnChartModel(): ColumnChartModel
+    {
+        $columnChartModel =
+            (new ColumnChartModel())
+                ->setTitle('Avg Trip Duration (m)')
+                ->setAnimated(true)
+                ->withoutLegend();
+
+        foreach ($this->statisticsResults->averageDurationPerDay as $day => $duration) {
+            $columnChartModel->addColumn($day, $duration, $this->getRandomPastelColor());
+        }
+
+
+        return $columnChartModel;
     }
 
     #[Computed]

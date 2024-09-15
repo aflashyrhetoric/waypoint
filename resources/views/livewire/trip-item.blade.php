@@ -1,6 +1,6 @@
 <div
     class="grid transition-all grid-cols-12 bg-white gap-4 p-4 rounded-xl {{ $trip->completed ? "opacity-50 hover:opacity-100": "opacity-100" }}">
-    <div class="col-span-10 text-2xl font-bold">
+    <div class="col-span-10 text-lg md:text-2xl font-bold">
         <livewire:time-format-string-long :date="$trip->departing_departure_time"/>
     </div>
     <i class="col-span-2 flex justify-end bi bi-trash text-red-600 cursor-pointer" wire:click="deleteTrip"></i>

@@ -1,3 +1,9 @@
+@import "./tailwind-custom.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/*Import relative tailwind-custom file*/

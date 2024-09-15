@@ -29,6 +29,8 @@ class StatisticsResults
     public int $averageReturningDelayWithConstruction;
     public string $averageReturningDelayWithConstructionString; // HH:mm
 
+    public array $averageDurationPerDay;
+
 //    public int $averageDelayFromConstruction;
 //    public int $averageDelayFromAll;
 }

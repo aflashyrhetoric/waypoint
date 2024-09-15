@@ -8,5 +8,10 @@ export default {
         extend: {},
     },
     plugins: [],
+
+    // Redefine base sans font to be figtree
+    fontFamily: {
+        sans: ['figtree', 'sans-serif'],
+    },
 }
 

@@ -27,6 +27,8 @@ class StatisticsService
 
         $stats = $this->calculateAverageDelayWithAccidents($stats);
         $stats = $this->calculateAverageDelayFromConstruction($stats);
+
+        $stats = $this->calculateAverageDurationPerDay($stats);
         return $stats;
     }
 
@@ -57,7 +59,7 @@ class StatisticsService
                 $totalTrips++;
             }
         }
-        if($totalTrips === 0){
+        if ($totalTrips === 0) {
             return 0;
         }
         return $totalDuration / $totalTrips;
@@ -75,7 +77,7 @@ class StatisticsService
                 $totalTrips++;
             }
         }
-        if($totalTrips === 0){
+        if ($totalTrips === 0) {
             return 0;
         }
         return $totalDuration / $totalTrips;
@@ -116,7 +118,6 @@ class StatisticsService
         $stats->averageDepartingDelayWithAccidentString = $this->convertDurationToString($stats->averageDepartingDelayWithAccident);
         $stats->averageReturningDelayWithAccident = $averageReturningTripDurationAccidents - $averageReturningTripDurationNoAccidents;
         $stats->averageReturningDelayWithAccidentString = $this->convertDurationToString($stats->averageReturningDelayWithAccident);
-
 
 
         return $stats;
@@ -161,8 +162,53 @@ class StatisticsService
         return $stats;
     }
 
+    // Returns things as "05:22"
     private function convertDurationToString(int $duration): string
     {
         return Carbon::now()->startOfDay()->addMinutes($duration)->format('H:i');
+    }
+
+    private function calculateAverageDurationPerDay(StatisticsResults $stats): StatisticsResults
+    {
+        $totalTripsPerDay = [
+            'monday' => 0,
+            'tuesday' => 0,
+            'wednesday' => 0,
+            'thursday' => 0,
+            'friday' => 0,
+            'saturday' => 0,
+            'sunday' => 0,
+        ];
+
+        $totalDurationPerDay = [
+            'monday' => 0,
+            'tuesday' => 0,
+            'wednesday' => 0,
+            'thursday' => 0,
+            'friday' => 0,
+            'saturday' => 0,
+            'sunday' => 0,
+        ];
+
+        // Iterate through $this->trips, and add count and duration to corresponding variables
+        foreach ($this->trips as $trip) {
+            $day = Carbon::parse($trip->departing_departure_time)->dayName;
+            $day = strtolower($day);
+            $totalTripsPerDay[$day]++;
+            $totalDurationPerDay[$day] += Carbon::parse($trip->departing_departure_time)->diffInMinutes(Carbon::parse($trip->departing_arrival_time));
+        }
+
+        $avgDurationPerDay = [];
+
+        foreach ($totalDurationPerDay as $day => $totalDuration) {
+            $avgDuration = $totalDuration / $totalTripsPerDay[$day];
+
+            // Cast $avgDurationPerDay[$day] to int
+            $avgDurationPerDay[$day] = (int) $avgDuration;
+        }
+
+        $stats->averageDurationPerDay = $avgDurationPerDay;
+
+        return $stats;
     }
 }
