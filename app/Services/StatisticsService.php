@@ -201,10 +201,17 @@ class StatisticsService
         $avgDurationPerDay = [];
 
         foreach ($totalDurationPerDay as $day => $totalDuration) {
+            // If the $totalTripsPerDay[$day] is zero, set the average duration to zero
+            if ($totalTripsPerDay[$day] === 0) {
+                $avgDurationPerDay[$day] = 0;
+                continue;
+            }
+
+            // Else Calculate the average duration
             $avgDuration = $totalDuration / $totalTripsPerDay[$day];
 
             // Cast $avgDurationPerDay[$day] to int
-            $avgDurationPerDay[$day] = (int) $avgDuration;
+            $avgDurationPerDay[$day] = (int)$avgDuration;
         }
 
         $stats->averageDurationPerDay = $avgDurationPerDay;
