@@ -13,6 +13,15 @@ class Trip extends Model
     // guard the id
     protected $guarded = ['id'];
 
+    // cast date fields to Carbon
+
+    protected $casts = [
+        'departing_departure_time' => 'datetime',
+        'departing_arrival_time' => 'datetime',
+        'returning_departure_time' => 'datetime',
+        'returning_arrival_time' => 'datetime',
+    ];
+
     public function dateString($date): string
     {
         if($date === null) {
